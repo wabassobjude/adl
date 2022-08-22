@@ -4,7 +4,7 @@
     class Singleaccount extends Connecter{
         private $firstname;
         private $lastname;
-        private $sa_date;
+        private $sadate;
         private $daddy;
         private $missionnaries;
         private $fasting;
@@ -12,10 +12,10 @@
         private $id_user=1;
 
 
-        public function __construct($firstname, $lastname, $sa_date) {
+        public function __construct($firstname, $lastname, $sadate) {
             $this->setFirstname($firstname);
             $this->setLastname($lastname);
-            $this->setSa_date($sa_date);
+            $this->setSadate($sadate);
         }
 
 
@@ -40,14 +40,14 @@
             }
         }
 
-        public function setSa_date($var)
+        public function setSadate($var)
         {
             // ajouter la condition sur le type de $var après
             if(isset($var)){
-                $this->_sa_date=$var;
+                $this->_sadate=$var;
             }
             else{
-                throw new \Exception("La valeur de la date est incorrecte. Veuillez verifier(fichier Singleaccount.php/setSa_date)");
+                throw new \Exception("La valeur de la date est incorrecte. Veuillez verifier(fichier Singleaccount.php/setSadate)");
             }
         }
 
@@ -64,7 +64,7 @@
         public function setMissionnaries($var)
         {
             if(isset($var) && is_int($var)){
-                $this->_daddy=$var;
+                $this->_missionnaries=$var;
             }
             else{
                 throw new \Exception("La valeur du champ 'missionnaries' est incorrecte. Veuillez verifier(fichier Singleaccount.php/setMissionnaries)");
@@ -91,7 +91,7 @@
             }
         }
 
-        public function ssetId_user($var)
+        public function setId_user($var)
         {
             if(isset($var) && is_int($var)){
                 $this->_id_user=$var;
@@ -105,7 +105,7 @@
 
         public function getFirstname(){ return $this->_firstname;}
         public function getLastname(){ return $this->_lastname; }
-        public function getSa_date(){ return $this->_sa_date; }
+        public function getSadate(){ return $this->_sadate; }
         public function getDaddy(){ return $this->_daddy; }
         public function getMissionnaries(){ return $this->_missionnaries; }
         public function getFasting(){ return $this->_fasting; }
@@ -114,6 +114,7 @@
         
 
         // Afficher de facilement un objet pris en BD
+
         // public function afficherUser(array $data){
         //     foreach ($data as $key => $value) {
         //         $callMethod="get".ucfirst($key);
@@ -127,16 +128,28 @@
         //     }  
         // }
 
-        // public function addSingleAccount($firstname, $lastname, $sa_date,$dad,$miss,$fasting,$type_jeune,$id_user)
+        // public function addSingleAccount($firstname, $lastname, $sadate,$dad,$miss,$fasting,$type_jeune,$id_user)
+        
+        public function hydraterSA($dad,$miss,$fasting,$type_jeune)
+        {
+            $this->_daddy=$dad;
+            $this->_missionnaries=$miss;
+            $this->_fasting=$fasting;
+            $this->_type_jeune=$type_jeune;
+            $this->_id_user=1;
+            return $this;
+        }
+        
         public function addSingleAccount(Singleaccount $sa)
         {
             $bdd= $this->connexionDB();
-            $req= $bdd->prepare("INSERT INTO singleaccount(firstname,lastname,sa_date,daddy,missionnaries,fasting,type_jeune,id_user)
-                                VALUES(:fn,:ln,:sa_date,:daddy,:miss,:fasting,:tj,:id_user)");
+            $req= $bdd->prepare("INSERT INTO singleaccount(firstname,lastname,sadate,daddy,missionnaries,fasting,type_jeune,id_user)
+                                VALUES(:fn,:ln,:sadate,:daddy,:miss,:fasting,:tj,:id_user)");
             $resultat=$req->execute(array(
                 'fn'=>$sa->getFirstname(),
                 'ln'=>$sa->getLastname(),
-                'sa_date'=>$sa->getSa_date(),
+                'sadate'=>$sa->getSadate(),
+                // 'sadate'=>"2002-08-08 12:30",
                 'daddy'=>$sa->getDaddy(),
                 'miss'=>$sa->getMissionnaries(),
                 'fasting'=>$sa->getFasting(),
@@ -144,7 +157,7 @@
                 'id_user'=>$sa->getId_user()
             ));
             if($resultat){
-            return $resultat;
+                return $resultat;
             }
             else{
                 throw new \Exception("Erreur lors de l'ajout dans la BD(Fn: Singleaccount.php/addSingleAccount)");
