@@ -1,0 +1,5 @@
+Les etapes pour commit un projet en ligne sont:
+    git status; (volontaire)
+    git add . ;(Pour ajouter tous les fichiers) ou git add nom_du_fichier (pour etre selectif)
+    git commit -m "Un message expliquant ce qui a été fait";
+    git push origin main (main represente la branche sous laquelle on fait le push)
