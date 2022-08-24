@@ -9,6 +9,7 @@
         private $polename;
         private $leader;
         private $nation;
+        private $id_user;
 
         public function __construct($polename,$leader,$nation) {
             $this->setPolename($polename);
@@ -44,15 +45,27 @@
             }   
         }
 
+        public function setId_user($var)
+        {
+            if(isset($var) && is_int($var)){
+                $this->_id_user=$var;
+            }
+            else{
+                throw new \ErrorException("Erreur(from Pole Model): Identifiant de l'utilisateur corrompu!");
+            }
+        }
+
         // Cration des getters
         public function getPolename(){return $this->_polename;}
         public function getLeader(){return $this->_leader;}
         public function getNation(){return $this->_nation;}
+        public function getId_user(){return $this->_id_user;}
 
 
-        public function addPole($polename,$leader,$nation)
+        public function addPole($polename,$leader,$nation,$id_user)
         {
             $pole= new Pole($polename,$leader,$nation);
+            $pole->setId_user($id_user);
             $bdd=$this->connexionDB();
             // $bdd=$this->connexionDB();
             $req= $bdd->prepare("INSERT INTO pole(polename,leader,nation,id_user) values(:polename,:leader,:nation,:id_user)");
@@ -60,9 +73,28 @@
                 'polename'=>$pole->getPolename(),
                 'leader'=>$pole->getLeader(),
                 'nation'=>$pole->getNation(),
-                'id_user'=>1
+                'id_user'=>$pole->getId_user()
             ));
             return $state;
+        }
+
+        public function poleList()
+        {
+            $poles=[];
+            $identifiants=[];
+            $bdd= $this->connexionDB();
+            $req= $bdd->query('SELECT* FROM pole ORDER BY polename');
+            while($ligne=$req->fetch(\PDO::FETCH_ASSOC)){
+                $pole= new Pole($ligne['polename'],$ligne['leader'],$ligne['nation']);
+                $iden=(int)$ligne['id_user'];
+                $pole->setId_user($iden);
+                $poles[]=$pole;
+                $identifiants[]=(int)$ligne['id'];
+            }
+            $tabs=[2];
+            $tabs[0]=$poles;
+            $tabs[1]=$identifiants;
+            return $tabs;
         }
 
     }

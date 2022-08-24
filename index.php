@@ -4,6 +4,14 @@
     try {
 
         if(isset($_GET['action'])){
+            if($_GET['action']=='menu2'){
+                formSA();
+            }
+
+            if($_GET['action']=='menu3'){
+                displayForm();
+            }
+
             if($_GET['action']=='ajouter'){
                 // die(var_dump($_POST['polename']));
                 addingPole($_POST['polename'], $_POST['leader'], $_POST['nation']);
@@ -15,6 +23,14 @@
                 }else{
                     throw new \Exception("Erreur lors de la recuperation des donnees du formulaire(index.php/action=makeSA)");
                 }
+            }
+
+            if($_GET['action']=='makePA'){
+                addingPA($_POST['periode'],$_POST['pa_date'],$_POST['pole'],$_POST['effectif'],$_POST['daddy'],$_POST['missionnaries'],$id_user);
+            }
+
+            if($_GET['action']=='acceuil'){
+                formPA();
             }
         }
         else{

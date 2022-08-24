@@ -13,9 +13,9 @@
             <td><input type="time" name="missionnaries"required ></td>
             <td><input type="number" name="jeune" required></td>
             <td><select name="type_jeune" required>
-                <option value="">choisir</option>
-                <option value="Complet">Complet</option>
+                <!-- <option value="">choisir</option> -->
                 <option value="Partiel">Partiel</option>
+                <option value="Complet">Complet</option>
             </select></td>
             <td><input type="submit" value="Enregistrer"></td>
         </tr>

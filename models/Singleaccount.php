@@ -44,7 +44,7 @@
         {
             // ajouter la condition sur le type de $var après
             if(isset($var)){
-                $this->_sadate=$var;
+                $this->_sadate=$var; //sa_date: single account date
             }
             else{
                 throw new \Exception("La valeur de la date est incorrecte. Veuillez verifier(fichier Singleaccount.php/setSadate)");
@@ -53,7 +53,7 @@
 
         public function setDaddy($var)
         {
-            if(isset($var) && is_int($var)){
+            if(isset($var)){
                 $this->_daddy=$var;
             }
             else{
@@ -63,7 +63,7 @@
 
         public function setMissionnaries($var)
         {
-            if(isset($var) && is_int($var)){
+            if(isset($var)){
                 $this->_missionnaries=$var;
             }
             else{
@@ -130,13 +130,13 @@
 
         // public function addSingleAccount($firstname, $lastname, $sadate,$dad,$miss,$fasting,$type_jeune,$id_user)
         
-        public function hydraterSA($dad,$miss,$fasting,$type_jeune)
+        public function hydraterSA($dad,$miss,$fasting,$type_jeune,$idUser)
         {
-            $this->_daddy=$dad;
-            $this->_missionnaries=$miss;
-            $this->_fasting=$fasting;
-            $this->_type_jeune=$type_jeune;
-            $this->_id_user=1;
+            $this->setDaddy($dad);
+            $this->setMissionnaries($miss);
+            $this->setFasting($fasting);
+            $this->setType_jeune($type_jeune);
+            $this->setId_user($idUser);
             return $this;
         }
         
