@@ -132,6 +132,7 @@
         
         public function hydraterSA($dad,$miss,$fasting,$type_jeune,$idUser)
         {
+
             $this->setDaddy($dad);
             $this->setMissionnaries($miss);
             $this->setFasting($fasting);
@@ -162,6 +163,27 @@
             else{
                 throw new \Exception("Erreur lors de l'ajout dans la BD(Fn: Singleaccount.php/addSingleAccount)");
             }
+        }
+
+        public function singleAccountList()
+        {
+            $bdd= $this->connexionDB();
+            $req= $bdd->query("SELECT* FROM singleaccount ORDER BY sadate");
+            $SA=[];
+            $identifies=[];
+            while($occurence=$req->fetch(\PDO::FETCH_ASSOC)){
+                $oneSA= new Singleaccount($occurence['firstname'],$occurence['lastname'],$occurence['sadate']);
+                $fasting=(int)$occurence['fasting'];
+                $idenUser=(int)$occurence['id_user'];
+                $oneSA=$oneSA->hydraterSA($occurence['daddy'],$occurence['missionnaries'],$fasting,$occurence['type_jeune'],$idenUser);
+                $SA[]=$oneSA;
+                $identifies[]=$occurence['id'];
+            }
+
+            $tab=[2];
+            $tab[0]=$SA;
+            $tab[1]=$identifies;
+            return $tab;
         }
 
     }

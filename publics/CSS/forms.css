@@ -1,0 +1,66 @@
+*{
+    box-sizing: border-box;
+}
+html{
+    background-color: rgba(192,192,192,0.5);
+}
+
+.formulaire{
+     width: 100%;
+    border: 0;
+    border-bottom: 2px solid rgb(192,192,192);
+    padding-bottom: 20px;
+    z-index: 2;
+    position: relative;
+}
+
+.separateur{
+    width: 100%;
+    border: 2px solid rgb(192,192,192);
+    box-shadow: 0 5px 10px rgba(0, 0, 0,0.3);
+}
+
+.formulaire form h3{
+    text-align: center;
+    font-family: Playball, 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
+
+.formulaire form table,.formulaire form table tr{
+    width: 100%;
+    text-align: center;
+}
+
+.formulaire form table tr td{
+    width: calc(100%/8);
+    /* width: 12%; */
+}
+
+.formulaire form h3 .gras{
+    color: #017bbe ;
+}
+
+.formulaire form table tr td input,.formulaire form table tr td select{
+    width: 100%;
+    margin-right: 10px;
+    padding: 10px 10px;
+    text-align: center;
+    border: none;
+    /* background-color: #017bbe; */
+    border-bottom: 1px solid #017bbe;
+    border-radius: 20px;
+}
+
+.formulaire form table tr .bouton input{
+    color: white;
+    border: 2px solid white;
+    background-color: #017bbe;
+}
+
+
+.formulaire form table tr .bouton input:hover{
+    /* font-weight: bold; */
+    letter-spacing: 0.1px;
+    /* color: #017bbe; */
+    border-color: #017bbe;
+    /* background-color: white; */
+}

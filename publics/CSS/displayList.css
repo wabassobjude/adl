@@ -1,0 +1,59 @@
+*{
+    box-sizing: border-box;
+}
+
+.affichages{
+    width: 100%;;
+    text-align: center; /* Important pour la valeur du else du fichier viewPA*/
+    z-index: 1;
+}
+
+.affichages h3{
+    text-align: center;
+    color: #017bbe;
+}
+
+.affichages .details h4 span{
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 16px;
+    color: white;
+    background-color: #017bbe;
+    border-radius: 20px;
+}
+
+.affichages table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.affichages table tr{
+    width: 100%;
+}
+
+.affichages table tr td{
+    text-align: center;
+    width: calc(100%/9);
+    border: 1px solid black;
+}
+
+.affichages table tr th{
+    text-align: center;
+    width: calc(100%/9);
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+}
+
+.affichages table tr .volume{
+    color: #017bbe;
+    font-weight: bold;
+}
+
+.affichages table tr td a img{
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    background-color:#017bbe;
+    /* margin: 5px; */
+}

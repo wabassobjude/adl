@@ -15,11 +15,16 @@
     // require_once('./models/Pole.php');
 
     use models\Pole;
-use models\Poleaccount;
-use models\Singleaccount;
+    use models\Poleaccount;
+    use models\Singleaccount;
+    use models\Fasting;
 
     
-    /*LES METHODES DE LA CLASSE Pole */
+    /******************************************************
+    *******                                           *****
+    *******         LES METHODES DE LA CLASSE Pole    *****
+    *******                                           *****
+    *******************************************************/
 
     function displayForm(){
             require("./views/poleView.php");
@@ -55,10 +60,21 @@ use models\Singleaccount;
         }
     }
 
+    function getOnePole($iden){
+        $vide='';
+        $emptyPole= new Pole($vide,$vide,$vide);
+        $pole=$emptyPole->onePole($iden);
+        return $pole;
+    }
 
-    /*LES METHODES DE LA CLASSE Singleaccount */
+    /******************************************************
+    *******                                           *****
+    *******   LES METHODES DE LA CLASSE Singleaccount *****
+    *******                                           *****
+    *******************************************************/
 
     function formSA(){
+        $liste=getSingleAcountList();
         require('./views/viewSA.php');
     }
     
@@ -78,16 +94,34 @@ use models\Singleaccount;
 
         $resultat=$sa->addSingleAccount($sa);
         if($resultat){
-            require('./views/viewSA.php');
+            formSA();
         }else{
             throw new \Exception("Fichier frontend.php(addinSA): Echec d'ajout du compte rendu individuel");
         }
     }
 
-    // Les methodes de classe Poleaccount
+    function getSingleAcountList()
+    {
+        $emptySA=new Singleaccount('','','');
+        $listeSA=$emptySA->singleAccountList();
+        $j=count($listeSA[0]);
+        if($j!=0){
+            return $listeSA;
+        }
+        else{
+            return false;
+        }
+    }
 
+    /******************************************************
+    *******                                         *******
+    *******     Les methodes de classe              *******
+    *******           Poleaccount(P.A.)             *******
+    *******************************************************/
+    
     function formPA(){
-        $listePole=getPoleList();
+        $listePole=getPoleList();//Pour le formulaire
+        $listAccountPole=getPoleAcountList();// Pour la tableau des C.R.P
         require('./views/viewPA.php');
     }
 
@@ -111,4 +145,60 @@ use models\Singleaccount;
         else{
             throw new \Exception("Fichier frontend.php(addingPA): Echec d'ajout du compte rendu du pole $statut");
         }
-    } 
+    }
+
+    function getPoleAcountList()
+    {
+        $emptyPA=new Poleaccount('','',0);//Remplace 0 par '' pour voir le comportement de la methode
+        $listePA=$emptyPA->poleAcountList();
+        $j=count($listePA[0]);
+        if($j!=0){
+            return $listePA;
+        }
+        else{
+            return false;
+        }
+    }
+
+    /******************************************************
+    *******                                           *****
+    *******   LES METHODES DE LA CLASSE Fasting       *****
+    *******                                           *****
+    *******************************************************/
+    function formFasting($idPole, $idPA)
+    {
+        $idenPole=(int)$idPole;
+        $idenPA=(int)$idPA;
+        
+        $vide='';
+        $emptyPole= new Pole($vide,$vide,$vide);
+        $pole=$emptyPole->onePole($idenPole);
+        $poleName=$pole->getPolename();
+
+        require('./views/viewFasting.php');
+    }
+
+    function addingFasting($periode,$jours,$type,$idPA)
+    {
+        
+        $periode=htmlspecialchars($periode);
+        $jours=(int)htmlspecialchars($jours);
+        $type=htmlspecialchars($type);
+        $idPA=(int)htmlspecialchars($idPA);
+        // die(var_dump($jours));
+        $jeune= new Fasting($periode,$jours,$type,$idPA);
+        // $fasting= new Fasting($periode,$jours,$type,$idPA);
+        
+        $state= $jeune->addFasting($jeune);
+        if($state){
+            formPA();
+            echo("<h5 style='color:green'>Ajout reussit</h5>");
+        }
+    }
+
+    /******************************************************
+    *******                                           *****
+    *******   LES METHODES independantes des CLASSES  *****
+    *******                                           *****
+    *******************************************************/
+

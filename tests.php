@@ -8,7 +8,7 @@
 </head>
 <body>
     <form action="" method="POST">
-        <input type="date" name="laDate">
+        <input type="date" name="laDate" required>
         <input type="submit" name="envoyer">
     </form>
 </body>
@@ -18,8 +18,13 @@
     if(isset($_POST['envoyer'])){
         $var=$_POST['laDate'];
         echo("La date 1 est: $var </br>");
-        $var=date("d-m-Y");
-        var_dump($var);
-        echo("</br>La date 2 est: $var");
+        $var=date("H:i",);
+        var_dump($var); 
+        echo("</br>Le numero de la semaine est: $var </br>$num");
+       /* TRES IMPORTANT
+            TRAITEMENTS SUR LES DATES
+            date("M"): Retourne l'abreviation du mois en cour;
+            date("W"): Retourne le numero (dans l'annee) de la semaine en cour
+       */
     }
 ?>

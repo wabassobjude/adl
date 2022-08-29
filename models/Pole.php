@@ -97,4 +97,21 @@
             return $tabs;
         }
 
+        // Get a specific pole
+
+        public function onePole($iden)
+        {
+            $bdd=$this->connexionDB();
+            $req=$bdd->query("SELECT* FROM pole WHERE id=$iden");
+
+            $occurence=$req->fetch(\PDO::FETCH_ASSOC);
+            $pole=new Pole($occurence['polename'],$occurence['leader'],$occurence['nation']);
+
+            $iden=(int)$occurence['id_user'];
+
+            $pole->setId_user($iden);
+
+            return $pole;
+        }
+
     }

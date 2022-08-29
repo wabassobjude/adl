@@ -52,7 +52,7 @@
 
         public function setEffectif($var)
         {
-            if(isset($var) && is_int($var) && $var>0){
+            if(isset($var) && is_int($var)){
                 $this->_effectif=$var;
             }
             else{
@@ -110,6 +110,7 @@
             return;
         }
 
+        // Insertion dans la BD
         public function addPoleAccount(Poleaccount $pa)
         {
             $bdd= $this->connexionDB();
@@ -130,6 +131,29 @@
             else{
                 throw new \Exception("Erreur lors de l'insertion dans la BD(Fn: Poleaccount.php/addPoleAccount)");
             }
+        }
+
+        // Liste des CRP depuis la BD
+
+        public function poleAcountList()
+        {
+            $bdd= $this->connexionDB();
+            $req= $bdd->query("SELECT* FROM poleaccount ORDER BY pa_date");
+            $poleAccounts=[];
+            $idenPA=[];
+            while($liste=$req->fetch(\PDO::FETCH_ASSOC)){
+                $effectif=(int)$liste['effectif'];
+                $account= new Poleaccount($liste['periode'],$liste['pa_date'],$effectif);
+                $idPole=(int)$liste['id_pole'];
+                $idUser=(int)$liste['id_user'];
+                $account->hydraterPoleAccount($liste['daddy'],$liste['missionnaries'],$idPole,$idUser);
+                $poleAccounts[]=$account;
+                $idenPA[]=(int)$liste['id'];
+            }
+            $tabPA=[2];
+            $tabPA[0]=$poleAccounts;
+            $tabPA[1]=$idenPA;
+            return $tabPA;
         }
 
     }
