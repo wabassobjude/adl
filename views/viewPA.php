@@ -83,14 +83,19 @@
                     for($i=0; $i<$j; $i++){ $iden=$listAccountPole[0][$i]->getId_pole(); ?>
                         <tbody>
                             <tr>
+                                <?php
+                                    $effectif=$listAccountPole[0][$i]->getEffectif();
+                                    $daddy= $listAccountPole[0][$i]->getDaddy();
+                                    $missionnaires= $listAccountPole[0][$i]->getMissionnaries();
+                                ?>
                                 <td><?=$listAccountPole[0][$i]->getPeriode() ?></td>
                                 <td><?= $listAccountPole[0][$i]->getPa_date() ?></td>
                                 <td><?=getOnePole($iden)->getPolename() ?></td>
-                                <td><?= $listAccountPole[0][$i]->getEffectif() ?></td>
-                                <td><?= $listAccountPole[0][$i]->getDaddy() ?></td>
-                                <td class="volume">à calculer...</td>
-                                <td><?= $listAccountPole[0][$i]->getMissionnaries() ?></td>
-                                <td class="volume">à calculer...</td>
+                                <td><?=$effectif?></td>
+                                <td><?=$daddy?></td>
+                                <td class="volume"><?=volumePriere($daddy,$effectif) ?></td>
+                                <td><?=$missionnaires?></td>
+                                <td class="volume"><?=volumePriere($missionnaires,$effectif) ?></td>
                                 <td>
                                     <a href="index.php? action=formFasting&amp;idPole=<?=$iden?>&amp;idPA=<?=$listAccountPole[1][$i]?>" title="Enregistrer le Jeûne">
                                         <img src="././publics/images/plus.jpg" alt="ajouter">

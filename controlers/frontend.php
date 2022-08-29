@@ -202,3 +202,25 @@
     *******                                           *****
     *******************************************************/
 
+    function volumePriere($times, $effectif)
+    {
+        $heure=$times[0].$times[1];
+        $heure=(int)$heure;
+        $minutes=$times[3].$times[4];
+        $minutes=(int)$minutes;
+        $enMinute=(($heure*60)+$minutes)*$effectif;
+
+        $h=0;
+        $jours=0;
+        while($enMinute>=60){
+            $h+=1;
+            $enMinute= $enMinute-60;
+        }
+        if($enMinute==0){
+            $enMinute='00';
+        }elseif($enMinute<10){
+            $enMinute='0'.$enMinute;
+        }
+        $volH=$h.'H'.$enMinute;
+        return $volH;
+    }
