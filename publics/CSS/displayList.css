@@ -1,3 +1,10 @@
+/***********************************************************************
+****                                                                ****
+****  Ce CSS est appliqué uniquement aux Tableaux qui sont affichés ****
+****                                                                ****
+*************************************************************************
+*/
+
 *{
     box-sizing: border-box;
 }
@@ -31,15 +38,24 @@
     width: 100%;
 }
 
+.affichages table tbody tr:nth-child(2n){
+    background-color: #6bacd056;
+}
+
+.affichages table tbody tr:hover{
+    background-color: #6fe2d956;
+    box-shadow: 0 2px 2px black;
+}
+
 .affichages table tr td{
     text-align: center;
-    width: calc(100%/9);
+    width: calc(100%/10);
     border: 1px solid black;
 }
 
 .affichages table tr th{
     text-align: center;
-    width: calc(100%/9);
+    width: calc(100%/10);
     border: 1px solid black;
     background-color: black;
     color: white;

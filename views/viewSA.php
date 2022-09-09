@@ -52,6 +52,7 @@
                         <th>Daddy</th>
                         <th>Missionnaires</th>
                         <th>Jeûnes</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -61,6 +62,7 @@
                         <th>Daddy</th>
                         <th>Missionnaires</th>
                         <th>Jeûnes</th>
+                        <th>Actions</th>
                     </tr>
                 </tfoot>
                 <tbody>
@@ -72,6 +74,9 @@
                                 <td><?=$liste[0][$i]->getDaddy()?> </td>
                                 <td><?=$liste[0][$i]->getMissionnaries() ?> </td>
                                 <td><?=$liste[0][$i]->getFasting().''.'j'.' '.$liste[0][$i]->getType_jeune()?> </td>
+                                <td>
+                                    <a href="index.php? action=SAtoModify&amp;iden=<?=$liste[1][$i]?>">Modifier</a>
+                                </td>
                             </tr>
                         <?php }
                     ?>

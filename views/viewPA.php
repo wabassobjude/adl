@@ -49,8 +49,11 @@
 
 <div class="affichages">
     <?php
-        if($listePole!=false){?>
+        if($listePole!=false){$j=count($listAccountPole[0]);?>
             <h3>Liste des Comptes-rendus des pôles(C.R.P) déjà enregistré</h3>
+            <div class="details">
+                <h4>Total C.R.P: <span><?=$j?></span></h4>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -63,6 +66,7 @@
                         <th>Missionnaires</th>
                         <th>Vol. Miss</th>
                         <th>Jeûne</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tfoot>
@@ -76,6 +80,7 @@
                         <th>Missionnaires</th>
                         <th>Vol. Miss</th>
                         <th>Jeûne</th>
+                        <th>Actions</th>
                     </tr>
                 </tfoot>
                 <?php
@@ -101,7 +106,10 @@
                                         <img src="././publics/images/plus.jpg" alt="ajouter">
                                     </a>
                                 </td>
-
+                                <td>
+                                    <a href="index.php?action=PAtoModify&amp;idPole=<?=$iden?>&amp;idenPA=<?=$listAccountPole[1][$i]?>">Modifier</a>
+                                </td>
+                                
                             </tr>
                         </tbody>
                     <?php }

@@ -22,18 +22,10 @@
         $heure=(int)$heure;
         $minutes=$var[3].$var[4];
         $minutes=(int)$minutes;
-        $enMinute=(($heure*60)+$minutes)*6;
+        $enMinute=(($heure*60)+$minutes)*60;
 
-        $h=0;
-        $m=0;
-        while($enMinute>=60){
-            $h+=1;
-            $enMinute= $enMinute-60;
-        }
-        if($enMinute==0){
-            $enMinute='00';
-        }
-        $V=$h.'H'.$enMinute;
+        $V=date('H:i',$enMinute);
+        
         echo("$V<br/>");
         var_dump($V);
         // $var=$_POST['laDate'];

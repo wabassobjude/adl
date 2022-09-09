@@ -18,12 +18,12 @@
             <tr>
                 <td><input type="text" name="polename" value="<?= $poleName ?>" disabled></td>
                 <td><input type="week" name="periode" placeholder="Ex: 2022-W15" required></td>
-                <td><input type="number" name="jours" placeholder="Nombre de jours" min="0" required></td>
+                <td><input type="number" name="jours" placeholder="Nombre de jours" min="1" required></td>
                 <td>
                     <select name="type_jeune" required>
                         <option value="">choisir...</option>
                         <option value="Partiel">Partiel</option>
-                        <option value="Cpmplet">Complet</option>
+                        <option value="Complet">Complet</option>
                     </select>
                 </td>
                 <!-- <td><input type="hidden" name="idenPA" value=""></td> -->

@@ -186,4 +186,57 @@
             return $tab;
         }
 
+        /**
+         * Cette methode permet de recuperer un SingleAccount donné en BD.
+         * Elle prend en argument l'ID et retourne un objet de type Singleaccount
+         */
+        public function oneSingleAccount($idSA)
+        {
+            $bdd=$this->connexionDB();
+            $ligne= $bdd->query("SELECT* FROM singleaccount WHERE id=$idSA");
+            $data=$ligne->fetch(\PDO::FETCH_ASSOC);
+            $sa= new Singleaccount($data['firstname'],$data['lastname'],$data['sadate']);
+            $jeune=(int)$data['fasting'];
+            $idenUser=(int)$data['id_user'];
+            $sa->hydraterSA($data['daddy'],$data['missionnaries'],$jeune,$data['type_jeune'],$idenUser);
+
+            return $sa;
+        }
+
+        /**
+         * Cette methode permet de modifier un CRI donné. Elle prend en argument
+         * le nouveau Singleaccount ainsi que son ID.
+         * Elle retourne un 
+         */
+        public function modifySingleAccount(Singleaccount $sa,$idSA)
+        {
+            $bdd=$this->connexionDB();
+            $modify=$bdd->prepare("UPDATE singleaccount SET
+                                        firstname=:nom,
+                                        lastname=:prenom,
+                                        sadate=:sa_date,
+                                        daddy=:dad,
+                                        missionnaries=:miss,
+                                        fasting=:fastings,
+                                        type_jeune=:type_fasting,
+                                        id_user=:idUser
+                                        WHERE id=$idSA");
+            $state=$modify->execute(array(
+                                    'nom'=>$sa->getFirstname(),
+                                    'prenom'=>$sa->getLastname(),
+                                    'sa_date'=>$sa->getSadate(),
+                                    'dad'=>$sa->getDaddy(),
+                                    'miss'=>$sa->getMissionnaries(),
+                                    'fastings'=>$sa->getFasting(),
+                                    'type_fasting'=>$sa->getType_jeune(),
+                                    'idUser'=>$sa->getId_user()
+                                ));
+            if($state){
+                return $state;
+            }
+            else{
+                throw new \Exception("Singleaccount/modifySingleAccount: Erreur de modification du CRI");
+            }
+        }
+
     }

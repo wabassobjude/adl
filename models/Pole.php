@@ -23,6 +23,7 @@
                 $this->_polename=$var;
             }
             else{
+                // var_dump($var);
                 throw new \ErrorException("Erreur(from Pole Model): Le nom du pole n'est pas correct!! Veuillez entrer du texte!");
             }
         }
@@ -83,7 +84,7 @@
             $poles=[];
             $identifiants=[];
             $bdd= $this->connexionDB();
-            $req= $bdd->query('SELECT* FROM pole ORDER BY polename');
+            $req= $bdd->query("SELECT* FROM pole ORDER BY polename");
             while($ligne=$req->fetch(\PDO::FETCH_ASSOC)){
                 $pole= new Pole($ligne['polename'],$ligne['leader'],$ligne['nation']);
                 $iden=(int)$ligne['id_user'];
@@ -112,6 +113,24 @@
             $pole->setId_user($iden);
 
             return $pole;
+        }
+
+        public function modifyPole(Pole $pole, $idPole)
+        {
+            // $newPole= new Pole($pole->getPolename(),$pole->getLeader(),$pole->getLeader());
+            // $newPole->setId_user($pole->getId_user());
+            $bdd=$this->connexionDB();
+            $req=$bdd->prepare("UPDATE pole SET polename=:pn, leader=:theLeader,nation=:theNation,id_user=:idUser WHERE id=$idPole");
+            $status=$req->execute(array(
+                                  'pn'=>$pole->getPolename(),
+                                  'theLeader'=>$pole->getLeader(),
+                                  'theNation'=>$pole->getNation(),
+                                  'idUser'=>$pole->getId_user()  
+            ));
+            if(!$status){
+               throw new \Exception("Pole/modifyPole: Exhec de la modifcation"); 
+            }
+            return $status;
         }
 
     }

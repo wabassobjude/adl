@@ -156,4 +156,19 @@
             return $tabPA;
         }
 
+        // Fonction de recuperation d'un PoleAccount specifique
+        public function onePoleaccount($idPA)
+        {
+            $bdd=$this->connexionDB();
+            $req=$bdd->query("SELECT* FROM poleaccount WHERE id=$idPA");
+            $datas=$req->fetch(\PDO::FETCH_ASSOC);
+            $effectif=(int)$datas['effectif'];
+            $pa= new Poleaccount($datas['periode'],$datas['pa_date'],$effectif);
+            $idPole=(int)$datas['id_pole'];
+            $idUser=(int)$datas['id_user'];
+            $pa->hydraterPoleAccount($datas['daddy'],$datas['missionnaries'],$idPole,$idUser);
+
+            return $pa;
+        }
+
     }

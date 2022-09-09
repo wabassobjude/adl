@@ -26,10 +26,18 @@
     *******                                           *****
     *******************************************************/
 
+    /*
+        Cette fonction permet d;afficher le formulaire d'ajout d'un nouveau 'Pole'
+    */
     function displayForm(){
-            require("./views/poleView.php");
+        $liste=getPoleList();
+        require("./views/poleView.php");
     }
 
+    /*
+        Ceci est une fonction qui permet d'acceder à la classe 'Pole' et d'ajouter
+        un nouveau Pole dans la BD.
+    */
     function addingPole($polename, $leader, $nation)
     {
         $polename=htmlspecialchars($polename);
@@ -39,7 +47,8 @@
         $pole= new Pole($polename, $leader, $nation);
         $result=$pole->addPole($polename, $leader, $nation,$id_user);
         if($result){
-            require('./views/poleView.php');
+            // require('./views/poleView.php');
+            displayForm();
         }
         else{
             throw new \Exception("Fichier frontend.php: Echec d'ajout du pole");
@@ -48,6 +57,9 @@
         
     }
 
+    /*
+        Cette fonction permet de recuperer la liste des la BD
+    */
     function getPoleList(){
         $vide='';
         $emptyPole= new Pole($vide,$vide,$vide);
@@ -60,11 +72,43 @@
         }
     }
 
+    /*Cette fonction permet d'acceder à la classe 'Pole' et recuperer un pole specifique
+      dans la BD en passant son ID en argument.
+    */
     function getOnePole($iden){
-        $vide='';
+        $vide='vide';
         $emptyPole= new Pole($vide,$vide,$vide);
         $pole=$emptyPole->onePole($iden);
         return $pole;
+    }
+
+    /*Ceci est une fonction du controleur qui permet de afficher le formulaire de
+      modification d'un pole tout en affichant les anciennes valeurs de de pole en
+      en haut de page.
+    */
+    function poleFormModification($idenPole)
+    {
+        $thePole=getOnePole($idenPole);
+        $idPole= $idenPole; //Cet ID en envoyé au formualaire pour identifier le pole.
+        require('./views/modifyPole.php');
+    }
+
+    /*
+        Cette fonction permet de modifier un 'Pole'. Elle prend en paramettre les
+        nouvelles informations du nouveau Pole ainsi l'ID du Pole à modifier
+    */
+    function modifyingPole($polename,$leader,$nation,$idenPole,$idUser)
+    {
+        $idPole=(int)$idenPole;
+        $newPole= new Pole($polename,$leader,$nation);
+        $newPole->setId_user($idUser);
+        $state= $newPole->modifyPole($newPole,$idPole);
+        if($state){
+            displayForm();
+        }
+        else{
+            throw new \Exception("frontend/modifyingPole: Echec de mofication...");
+        }
     }
 
     /******************************************************
@@ -73,11 +117,20 @@
     *******                                           *****
     *******************************************************/
 
+    /*
+        Cette fonction est chargée d'afficher le formulaire d'ajout d'un C.R.I 
+        Elle recupere aussi la liste des CRI deja enregistrés et les tranfere à la vue
+        'viewSA' qui se chargera de les afficher. 
+    */
     function formSA(){
         $liste=getSingleAcountList();
         require('./views/viewSA.php');
     }
     
+    /*
+        Cette fonction permet d'ajouter un nouveau C.R.I. Elle appele les methodes
+        'hydraterSA', 'addSingleAccount' de la classe 'Singleaccount'
+    */
     function addingSA($date,$fn,$ln,$daddy,$miss,$fasting,$tj){
         $date= htmlspecialchars($date);
         $fn=htmlspecialchars($fn);
@@ -100,6 +153,34 @@
         }
     }
 
+    function modifyingSA($date, $nom, $prenom, $daddy, $miss, $jeune, $typeJeune, $idenSA)
+    {
+        // Sanctifiction des données de l'utilsateur.
+        $date=htmlspecialchars($date);
+        $prenom=htmlspecialchars($prenom);
+        $daddy=htmlspecialchars($daddy);
+        $miss=htmlspecialchars($miss);
+        $jeune=(int)htmlspecialchars($jeune);
+        $typeJeune=htmlspecialchars($typeJeune);
+        $idenSA=(int)$idenSA;
+
+        $sa=new Singleaccount($nom,$prenom,$date);
+        $idUser=1; // Apres avoir géré les session, changer cet identifiant
+        $sa->hydraterSA($daddy,$miss,$jeune,$typeJeune,$idUser);
+
+        $state=$sa->modifySingleAccount($sa,$idenSA);
+        if($state){
+            formSA();
+        }
+        else{
+            throw new \Exception("Frontend:modifyingSA | Echex de modification de C.R.I");
+        }
+
+    }
+
+    /*
+        Cette fonction permet de recuperer la liste des C.R.I deja enregistrés.
+    */
     function getSingleAcountList()
     {
         $emptySA=new Singleaccount('','','');
@@ -113,18 +194,35 @@
         }
     }
 
+    // Modifier un C.R.I
+    function modifyCRI($idCRI)
+    {
+        $idCRI=(int)$idCRI;
+        $sa=new Singleaccount('','','');
+        $CRI=$sa->oneSingleAccount($idCRI);
+        require('./views/modifySA.php');
+    }
     /******************************************************
     *******                                         *******
     *******     Les methodes de classe              *******
     *******           Poleaccount(P.A.)             *******
     *******************************************************/
     
+    /*
+        Cette fonction permet d'afficher le formulaire d'ajout d'un nouveau C.R.P 
+        Elle recupere la liste des CRP ainsi que celle des poles deja enregistré et la passe à la vue 'viewPA'
+        qui se charge de les afficher.
+    */
     function formPA(){
         $listePole=getPoleList();//Pour le formulaire
         $listAccountPole=getPoleAcountList();// Pour la tableau des C.R.P
         require('./views/viewPA.php');
     }
 
+    /*
+        Cette fonction est chargée de reuperer les données du formulaire d'ajout d'un CRP
+        et de les passer àla methode 'addPoleAccount' qui se charge de les ajouter dans la BD
+    */
     function addingPA($periode,$date,$IdPole,$effectif,$daddy,$miss,$id_user)
     {
         $periode=htmlspecialchars($periode);
@@ -147,6 +245,10 @@
         }
     }
 
+    /*
+        Cette fonction appelle la methode 'poleAcountList' de la classe 'Poleaccount'
+        qui retourne la liste des CRP deja enregistré.
+    */
     function getPoleAcountList()
     {
         $emptyPA=new Poleaccount('','',0);//Remplace 0 par '' pour voir le comportement de la methode
@@ -159,12 +261,44 @@
             return false;
         }
     }
+    
+    /*
+        Cette fonction appele la methode 'onePoleaccount' qui permet de recuperer un
+        un compte-rendu specifique
+    */
+    function getOnePoleAccount($idPA)
+    {
+        $empty='';
+        $emptyPA= new Poleaccount($empty,$empty,0);
+        $PA= $emptyPA->onePoleaccount($idPA);
+        return $PA;
+    }
+
+     /**
+     * Afficher le C.R.P àmodifier
+    */
+
+    function formPAmodification($idPole,$idenPA)
+    {
+        $idPole=(int)htmlspecialchars($idPole);
+        $idenPA=(int)htmlspecialchars($idenPA);
+        $thePA=getOnePoleAccount($idenPA);
+        $thePole=getOnePole($idPole);
+        require('./views/modifyPA.php');
+    }
+
 
     /******************************************************
     *******                                           *****
     *******   LES METHODES DE LA CLASSE Fasting       *****
     *******                                           *****
     *******************************************************/
+
+    /*
+        Cette fonction appelle la vue 'iewFasting.php' qui affiche le formulaire d'ajout
+        d'un compte-rendu de jeune pour un Pole donné. Elle prend en paramettre l'ID du
+        'Poleaccount' ainsi que celui du 'Pole'
+    */
     function formFasting($idPole, $idPA)
     {
         $idenPole=(int)$idPole;
@@ -178,6 +312,11 @@
         require('./views/viewFasting.php');
     }
 
+    /*
+        cette fonction permet de recuperer les données du formulaire d'ajout d'un compte
+        rendu de jeune pour un Pole et de les passer à la fonction 'addFasting' de la 
+        classe Fasting.
+    */
     function addingFasting($periode,$jours,$type,$idPA)
     {
         
@@ -202,6 +341,11 @@
     *******                                           *****
     *******************************************************/
 
+    /**
+     * Cette fonction prend en arguments une heure(type: string) prise de la BD ainsi
+     * qu'un entier et calcule le volume de priere d'un pole.
+     * 
+     */
     function volumePriere($times, $effectif)
     {
         $heure=$times[0].$times[1];
