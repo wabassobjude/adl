@@ -171,4 +171,31 @@
             return $pa;
         }
 
+        // Modifier un CRP
+        public function modifyOnePA(Poleaccount $PA, $idPA)
+        {
+            $bdd=$this->connexionDB();
+            $req= $bdd->prepare("UPDATE poleaccount SET
+                                                    periode=:newPeriode,
+                                                    pa_date=:newDate,
+                                                    id_pole=:newIdPole,
+                                                    effectif=:newEffectif,
+                                                    daddy=:newDaddy,
+                                                    missionnaries=:newMissionnaries,
+                                                    id_user=:newIdUser
+                                                    WHERE id=$idPA
+                                ");
+            $state=$req->execute(array(
+                                'newPeriode'=>$PA->getPeriode(),
+                                'newDate'=>$PA->getPa_date(),
+                                'newIdPole'=>$PA->getId_pole(),
+                                'newEffectif'=>$PA->getEffectif(),
+                                'newDaddy'=>$PA->getDaddy(),
+                                'newMissionnaries'=>$PA->getMissionnaries(),
+                                'newIdUser'=>$PA->getId_user()
+            ));
+
+            return $state;
+        }
+
     }

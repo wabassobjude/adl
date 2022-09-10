@@ -69,6 +69,10 @@
                 formPAmodification($_GET['idPole'],$_GET['idenPA']);
             }
 
+            if($_GET['action']=='modifyPA'){
+                modifyingPA($_POST['periode'], $_POST['PAdate'],$_POST['pole'],$_POST['effectif'],$_POST['daddy'],$_POST['missionnaries'], $idUser, $_GET['idenPA']);
+            }
+
             
         }
         else{

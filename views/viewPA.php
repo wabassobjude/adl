@@ -83,10 +83,12 @@
                         <th>Actions</th>
                     </tr>
                 </tfoot>
-                <?php
-                    $j=count($listAccountPole[0]);
-                    for($i=0; $i<$j; $i++){ $iden=$listAccountPole[0][$i]->getId_pole(); ?>
-                        <tbody>
+                <tbody>
+                    <?php
+                        $j=count($listAccountPole[0]);
+
+                        for($i=0; $i<$j; $i++){ $iden=$listAccountPole[0][$i]->getId_pole(); ?>
+                            
                             <tr>
                                 <?php
                                     $effectif=$listAccountPole[0][$i]->getEffectif();
@@ -107,13 +109,16 @@
                                     </a>
                                 </td>
                                 <td>
-                                    <a href="index.php?action=PAtoModify&amp;idPole=<?=$iden?>&amp;idenPA=<?=$listAccountPole[1][$i]?>">Modifier</a>
+                                    <a href="index.php?action=PAtoModify&amp;idPole=<?=$iden?>&amp;idenPA=<?=$listAccountPole[1][$i]?>" title="Modifier?">
+                                        <img id="imageModifier" src="././publics/images/modifier.png" alt="Modifier">
+                                    </a>
                                 </td>
                                 
                             </tr>
-                        </tbody>
-                    <?php }
-                ?>
+                            
+                        <?php }
+                    ?>
+                </tbody>
             </table>
     <?php }else{
         echo("Aucun compte rendu de pole(C.R.P) enregistré pour le moment");

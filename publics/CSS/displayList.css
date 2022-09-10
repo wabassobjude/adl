@@ -73,3 +73,10 @@
     background-color:#017bbe;
     /* margin: 5px; */
 }
+
+#imageModifier{
+    width: 40px !important;
+    height: 40px !important;
+    /* border-radius: 20px; */
+    /* margin: 5px; */
+}

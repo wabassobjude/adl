@@ -284,7 +284,31 @@
         $idenPA=(int)htmlspecialchars($idenPA);
         $thePA=getOnePoleAccount($idenPA);
         $thePole=getOnePole($idPole);
+        $allPoles=getPoleList();
         require('./views/modifyPA.php');
+    }
+
+    function modifyingPA($periode, $date, $idPole, $effectif, $daddy, $miss,$idUser,$idPA)
+    {
+        $periode=htmlspecialchars($periode);
+        $date=htmlspecialchars($date);
+        $idPole=(int)htmlspecialchars($idPole);
+        $effectif=(int)htmlspecialchars($effectif);
+        $daddy=htmlspecialchars($daddy);
+        $miss=htmlspecialchars($miss);
+        $idPA=htmlspecialchars($idPA);
+
+        $newPA= new Poleaccount($periode, $date,$effectif);
+        $idUser=1; //Changer cet ID lorsque j'aurais pris en compte les SESSIONS
+        $newPA->hydraterPoleAccount($daddy, $miss, $idPole,$idUser);
+        
+        $state= $newPA->modifyOnePA($newPA,$idPA);
+        if($state){
+            formPA();
+        }
+        else{
+            throw new \Exception("Frontend(modifyingPA):Echec de modification du C.R.P");
+        }
     }
 
 

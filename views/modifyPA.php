@@ -6,7 +6,7 @@
 ?>
 
 <div class="affichages">
-    <h3>Informations sur l'ancien Compte-rendu de pôle(C.R.P): <span><?=$thePole->getPolename()?></span></h3>
+    <h3>Informations sur le Compte-rendu de pôle(C.R.P) à modifier: <span><?=$thePole->getPolename()?></span></h3>
     <table>
         <thead>
             <tr>
@@ -30,8 +30,9 @@
 </div>
 
 <div class="formulaire">
-    <h3>Modifier le pôle</h3>
-    <form action="index.php? action=modifyPA&amp;idenPA=" method="POST">
+
+    <form action="index.php? action=modifyPA&amp;idenPA=<?=$idenPA?>" method="POST">
+        <h3>Modifier ce C.R.P</h3>
         <table>
             <tr>
                 <td>Periode</td>
@@ -42,12 +43,12 @@
                 <td>Missionnaires</td>
             </tr>
             <tr>
-                <td><input type="text" name="periode" value="<?=$thePA->getPeriode()?>"></td>
-                <td><input type="text" name="PAdate" value="<?=$thePA->getPa_date()?>"></td>
+                <td><input type="week" name="periode" value="<?=$thePA->getPeriode()?>" required placeholder="Format: 2022-W07"></td>
+                <td><input type="date" name="PAdate" value="<?=$thePA->getPa_date()?>" required></td>
                 
                 <td>
-                    <select name="pole" id="">
-                        <option value="<?=$thePA->getId_pole()?>"><?=$thePole->getPolename()?></option>
+                    <select name="pole">
+                        <option value="<?=$thePA->getId_pole()?>" required><?=$thePole->getPolename()?></option>
                         <?php
                             $thisPole=$thePA->getId_pole();
                             $j=count($allPoles[0]);
@@ -60,9 +61,9 @@
                     </select>
                 </td>
 
-                <td><input type="number" name="effectif" value="<?=$thePA->getEffectif() ?>"></td>
+                <td><input type="number" name="effectif" value="<?=$thePA->getEffectif() ?>" min="0" ></td>
                 <td><input type="time" name="daddy" value="<?=$thePA->getDaddy() ?>"></td>
-                <td><input type="time" name="missionnaries" value="<?=$thePA->getMissionnaries()?>"></td>
+                <td><input type="time" name="missionnaries" value="<?=$thePA->getMissionnaries()?>" required></td>
                 <td><input type="submit" value="Modifier"></td>
             </tr>
         </table>
