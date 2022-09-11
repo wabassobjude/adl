@@ -138,7 +138,7 @@
         public function poleAcountList()
         {
             $bdd= $this->connexionDB();
-            $req= $bdd->query("SELECT* FROM poleaccount ORDER BY pa_date");
+            $req= $bdd->query("SELECT* FROM poleaccount ORDER BY id DESC");
             $poleAccounts=[];
             $idenPA=[];
             while($liste=$req->fetch(\PDO::FETCH_ASSOC)){

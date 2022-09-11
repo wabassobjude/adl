@@ -65,7 +65,7 @@
                         <th>Vol. Daddy</th>
                         <th>Missionnaires</th>
                         <th>Vol. Miss</th>
-                        <th>Jeûne</th>
+                        <th>Jeûnes</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -79,7 +79,7 @@
                         <th>Vol. Daddy</th>
                         <th>Missionnaires</th>
                         <th>Vol. Miss</th>
-                        <th>Jeûne</th>
+                        <th>Jeûnes</th>
                         <th>Actions</th>
                     </tr>
                 </tfoot>
@@ -115,7 +115,7 @@
                                 </td>
                                 
                             </tr>
-                            
+
                         <?php }
                     ?>
                 </tbody>

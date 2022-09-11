@@ -84,7 +84,7 @@
             $poles=[];
             $identifiants=[];
             $bdd= $this->connexionDB();
-            $req= $bdd->query("SELECT* FROM pole ORDER BY polename");
+            $req= $bdd->query("SELECT* FROM pole ORDER BY id DESC");
             while($ligne=$req->fetch(\PDO::FETCH_ASSOC)){
                 $pole= new Pole($ligne['polename'],$ligne['leader'],$ligne['nation']);
                 $iden=(int)$ligne['id_user'];

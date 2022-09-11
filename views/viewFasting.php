@@ -1,13 +1,13 @@
 <?php
     $cssForm='././publics/CSS/forms.css';
+    $cssList= '././publics/CSS/displayList.css';
     $title="Ajouter le jeune";
     ob_start();
 ?>
 
 <div class="jeune formulaire">
     <form action="index.php?action=addJeune&amp;PA=<?=$idenPA ?>" method="POST">
-        <h3>Ajouter le jeune pour le Pôle <b class="gras">"<u><?=$poleName?></u>"</b> </h3>
-        <em>Apres, il sera mieux d'afficher toutes les infomations du Pôle concerné</em>
+        <h3>Ajouter le jeûne pour le Pôle <b class="gras">"<u><?=$poleName?></u>"</b> </h3>
         <table>
             <tr>
                 <td>Pôle</td>
@@ -31,6 +31,50 @@
             </tr>
         </table>
     </form>
+</div>
+
+<div class="affichages">
+    <?php
+        if($hisFastings!=false){$total= count($hisFastings[0]) ?>
+            <h3>Liste des  jeûnes déjà enregistrés pour ce Pôle: <span> <?=$poleName?> </span></h3>
+            <div class="details">
+                <h4>Total: <span><?=$total?></span> </h4>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Periodes</th>
+                        <th>Nombres de jours</th>
+                        <th>Types</th>
+                        <th>Nom du Pôle</th>
+                    </tr>
+                </thead>
+                <!-- <tfoot>
+                    <tr>
+                        <th>Periodes</th>
+                        <th>Nombres de jours</th>
+                        <th>Types</th>
+                        <th>Nom du Pôle</th>
+                    </tr>
+                </tfoot> -->
+                <tbody>
+                    <?php
+                        for($i=0; $i<$total; $i++){?>
+                            <tr>
+                                <td> <?=$hisFastings[0][$i]->getPeriode() ?> </td>
+                                <td> <?=$hisFastings[0][$i]->getJour() ?> </td>
+                                <td> <?=$hisFastings[0][$i]->getTypes() ?> </td>
+                                <td> <?=$poleName ?> </td>
+                            </tr>
+                        <?php }
+                    ?>
+                </tbody>
+            </table>
+        <?php }
+        else{
+            echo('Aucun jeune pour ce pole');
+        }
+    ?>
 </div>
 
 <?php

@@ -1,0 +1,60 @@
+.tout{
+    background-color: black;
+    text-align: center;
+}
+
+.tout span{
+    display: inline-block;
+    color: white;
+    /* text-align: center; */
+    line-height: 30px;
+    padding-bottom: 20px;
+}
+.footer{
+    text-align: center;
+    color: white;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 50px;
+    margin-top: 50px;
+}
+
+.footer .gauche {
+    align-self: center;
+}
+
+.footer .gauche img{
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+}
+
+.footer .milieu h4{
+    text-align: center;
+    color: #017bbe;
+}
+
+.footer .milieu a{
+    text-align: left;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    line-height: 30px;
+}
+
+.footer .milieu a:hover, .footer .droite a:hover{
+    color: #017bbe;
+}
+.footer .droite h4{
+    text-align: center;
+    color: #017bbe;
+}
+
+.footer .droite a{
+    text-align: left;
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+    line-height: 30px;
+}

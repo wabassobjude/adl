@@ -13,7 +13,6 @@
             }
 
             if($_GET['action']=='ajouter'){
-                // die(var_dump($_POST['polename']));
                 addingPole($_POST['polename'], $_POST['leader'], $_POST['nation']);
             }
 

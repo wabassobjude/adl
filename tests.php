@@ -7,6 +7,18 @@
     <title>Document</title>
 </head>
 <body>
+        <details>
+            <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                Modi totam, possimus, aspernatur praesentium excepturi aut, 
+                sit velit non cum dolor cumque temporibus iste delectus nam 
+                eum suscipit vitae error molestiae?
+            </p>
+        </details>
+
+
+
+
     <form action="" method="POST">
         <input type="date" name="laDate" >
         <input type="time" name="temps" required>

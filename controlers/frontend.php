@@ -319,7 +319,7 @@
     *******************************************************/
 
     /*
-        Cette fonction appelle la vue 'iewFasting.php' qui affiche le formulaire d'ajout
+        Cette fonction appelle la vue 'viewFasting.php' qui affiche le formulaire d'ajout
         d'un compte-rendu de jeune pour un Pole donné. Elle prend en paramettre l'ID du
         'Poleaccount' ainsi que celui du 'Pole'
     */
@@ -332,6 +332,10 @@
         $emptyPole= new Pole($vide,$vide,$vide);
         $pole=$emptyPole->onePole($idenPole);
         $poleName=$pole->getPolename();
+
+        $entier=1;
+        $emptyFasting= new Fasting('',$entier,'',$entier);
+        $hisFastings=$emptyFasting->fastingListForPA($idenPA);
 
         require('./views/viewFasting.php');
     }

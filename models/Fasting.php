@@ -81,10 +81,42 @@
             }
         }
 
+        /**
+         * Cette fonction retourne les jeunes d'un Pole donné classés suivant les IDs
+         * decroissants. 
+         */
         public function fastingListForPA($idPA)
         {
             $bdd=$this->connexionDB();
-            $req=$bdd->query("SELECT* FROM fasting WHERE id_pa=$idPA");
+            $req=$bdd->query("SELECT* FROM fasting WHERE id_pa=$idPA ORDER BY id DESC");
+            $fasts=[];
+            $identifiants=[];
+            while($ligne=$req->fetch(\PDO::FETCH_ASSOC)){
+                $jours=(int)$ligne['jours'];
+                $idenPA=(int)$ligne['id_pa'];
+                $oneFast= new Fasting($ligne['periode'], $jours,$ligne['types'], $idenPA);
+                $fasts[]=$oneFast;
+                $identifiants[]=(int)$ligne['id'];
+            }
+            $tab=[2];
+            $tab[0]=$fasts;
+            $tab[1]=$identifiants;
+
+            $j=count($tab[0]);
+            if($j!=0){
+                return $tab;
+            }
+            return false;
+        }
+
+        /**
+         * Cette fonction retourne la liste de TOUS les jeunes déjà enregistrés
+         * classée par IDs descroissants (plus renscent au plus ancien)
+         */
+        public function listAllFastings()
+        {
+            $bdd=$this->connexionDB();
+            $req=$bdd->query("SELECT* FROM fasting ORDER BY id DESC");
             $fasts=[];
             $identifiants=[];
             while($ligne=$req->fetch(\PDO::FETCH_ASSOC)){

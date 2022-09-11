@@ -75,8 +75,6 @@
 }
 
 #imageModifier{
-    width: 40px !important;
-    height: 40px !important;
-    /* border-radius: 20px; */
-    /* margin: 5px; */
+    width: 35px !important;
+    height: 30px !important;
 }
